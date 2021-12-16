@@ -19,11 +19,15 @@ type Tower struct {
 	tmp   []int
 }
 
+//NewTower создает элемент структуры, массив сортируется по убыванию
+//и находится на позиции start
 func NewTower(arr []int) (Tower, int) {
 	sort.Sort(sort.Reverse(sort.IntSlice(arr)))
 	return Tower{arr, make([]int, 0, len(arr)), make([]int, 0, len(arr))}, len(arr)
 }
 
+//Hanoi перекладывает элементы в позицию end в изначальном порядке
+//по правилам "Ханойской башни"
 func (t *Tower) Hanoi(src, dest, tmp *[]int, n int) {
 	if n == 0 {
 		transposit(src, dest)
@@ -37,6 +41,7 @@ func (t *Tower) Hanoi(src, dest, tmp *[]int, n int) {
 	t.Hanoi(tmp, dest, src, n-1)
 }
 
+//transposit переставляет элементы межу двумя массивами
 func transposit(source, dest *[]int) {
 	*dest = append((*dest), (*source)[len(*source)-1])
 	*source = (*source)[:len(*source)-1]
