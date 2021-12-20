@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 func main() {
@@ -26,7 +25,6 @@ func NewTower(n int) Tower {
 	for i := n; i > 0; i-- {
 		arr = append(arr, i)
 	}
-	sort.Sort(sort.Reverse(sort.IntSlice(arr)))
 	return Tower{arr, make([]int, 0, n), make([]int, 0, n)}
 }
 
