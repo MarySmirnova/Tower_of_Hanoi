@@ -6,10 +6,10 @@ import (
 )
 
 func main() {
-	tow, n := NewTower([]int{1, 5, 3, 6, 2, 4, 8, 7, 9, 10, 12, 11, 13, 1, 5})
+	tow := NewTower(22)
 	fmt.Println(tow)
 
-	tow.Hanoi(&tow.start, &tow.end, &tow.tmp, n)
+	GoHanoiTower(&tow)
 	fmt.Println(tow)
 }
 
@@ -19,11 +19,21 @@ type Tower struct {
 	tmp   []int
 }
 
-//NewTower создает элемент структуры, массив сортируется по убыванию
-//и находится на позиции start
-func NewTower(arr []int) (Tower, int) {
+//NewTower принимает количество элементов башни, создает структуру.
+//Пирамида на позиции start
+func NewTower(n int) Tower {
+	arr := make([]int, 0, n)
+	for i := n; i > 0; i-- {
+		arr = append(arr, i)
+	}
 	sort.Sort(sort.Reverse(sort.IntSlice(arr)))
-	return Tower{arr, make([]int, 0, len(arr)), make([]int, 0, len(arr))}, len(arr)
+	return Tower{arr, make([]int, 0, n), make([]int, 0, n)}
+}
+
+//GoHanoiTower запускает метод Hanoi, возвращает измененную структуру.
+func GoHanoiTower(t *Tower) Tower {
+	t.Hanoi(&t.start, &t.end, &t.tmp, len(t.start))
+	return *t
 }
 
 //Hanoi перекладывает элементы в позицию end в изначальном порядке
